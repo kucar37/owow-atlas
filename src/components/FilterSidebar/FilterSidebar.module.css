@@ -1,0 +1,131 @@
+.sidebar {
+  width: 220px;
+  min-width: 200px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.group {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.groupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.groupLabel {
+  font-family: 'PPNeueMontreal', monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  font-weight: 500;
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+.clearBtn:hover { color: #d4ff3a; }
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;        
+  padding: 6px 0;   
+  cursor: pointer;
+  font-size: 14px;  
+  color: rgba(255,255,255,0.6);
+  transition: color 0.15s;
+}
+.option:hover { color: rgba(255,255,255,0.9); }
+
+.option input[type="checkbox"] {
+  width: 16px;      
+  height: 16px;     
+  accent-color: #d4ff3a;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.optionLabel { flex: 1; }
+
+.count {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  font-variant-numeric: tabular-nums;
+}
+
+.clearAllBtn {
+  margin-top: 16px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5);
+  font-size: 11px;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+}
+.clearAllBtn:hover {
+  border-color: #d4ff3a;
+  color: #d4ff3a;
+}
+
+@font-face {
+  font-family: 'NeueMontrealMono';
+  src: url('/assets/fonts/PPNeueMontrealMono-Book.otf') format('opentype');
+  font-display: block; 
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+
+.menuBtn {
+  display: none;
+}
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .menuBtn {
+    display: block;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
+  .menuContent {
+    display: none;
+  }
+
+  .menuOpen {
+    display: flex;
+  }
+}
