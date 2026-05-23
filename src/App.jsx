@@ -1,5 +1,6 @@
 import AnimationCard from './components/AnimationCard/AnimationCard';
-import FadeIn from './components/animations/FadeIn';
+import FadeIn from './components/Animations/FadeIn';
+import CherryBlossom from './components/Animations/CherryBlossom';
 
 function App() {
   return (
@@ -17,6 +18,16 @@ function App() {
           description="A simple opacity transition from 0 to 1 with easing."
         >
           <FadeIn />
+        </AnimationCard>
+
+        <AnimationCard
+          name="Cherry_Blossom"
+          category="Entrance"
+          platform="Web"
+          library="CSS"
+          description="Falling cherry blossom petals with a swaying branch."
+        >
+          <CherryBlossom />
         </AnimationCard>
       </div>
     </div>
