@@ -4,6 +4,7 @@ import FilterSidebar from './components/FilterSidebar/FilterSidebar';
 import FadeIn from './components/Animations/FadeIn';
 import CherryBlossom from './components/Animations/CherryBlossom';
 import styles from './App.module.css';
+import Mushroom from './components/Animations/Mushroom';
 
 const ANIMATIONS = [
   {
@@ -24,6 +25,15 @@ const ANIMATIONS = [
     description: 'Falling cherry blossom petals with a swaying branch.',
     component: <CherryBlossom />,
   },
+  {
+    id: 'mushroom',
+    name: 'Mushroom',
+    category: 'Entrance',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'A cute mushroom that explodes when clicked.',
+    component: <Mushroom />,
+  }
 ];
 
 const DEFAULT_FILTERS = {
