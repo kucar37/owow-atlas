@@ -7,15 +7,29 @@ export default function AnimationCard({
   library = 'GSAP',
   description = '',
   children,
+  onClick,
 }) {
   const platforms = Array.isArray(platform) ? platform : [platform];
 
+  function handleKeyDown(event) {
+    if (!onClick) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onClick();
+    }
+  }
+
   return (
-    <div
+    <article
       className={styles.card}
       data-category={category.toLowerCase()}
       data-platform={platforms.map((p) => p.toLowerCase()).join(',')}
       data-library={library.toLowerCase()}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      aria-label={onClick ? `Open ${name} animation details` : undefined}
     >
       <div className={styles.preview}>
         {children}
@@ -34,6 +48,6 @@ export default function AnimationCard({
           <p className={styles.description}>{description}</p>
         )}
       </div>
-    </div>
+    </article>
   );
 }

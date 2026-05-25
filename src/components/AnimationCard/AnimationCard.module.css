@@ -10,6 +10,11 @@
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
+.card:focus-visible {
+  outline: 2px solid #D4FF3A;
+  outline-offset: 4px;
+}
+
 .card:hover {
   border-color: #D4FF3A;
   box-shadow: 0 0 24px rgba(212, 255, 58, 0.08);

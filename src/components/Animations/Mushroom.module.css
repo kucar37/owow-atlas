@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: idle 2s ease-in-out infinite;
+  animation: idle var(--animation-duration, 2000ms) var(--animation-easing, ease-in-out) var(--animation-delay, 0ms) var(--animation-iteration-count, infinite);
   position: relative;
 }
 
@@ -49,7 +49,7 @@
   font-size: 11px;
   color: #666;
   letter-spacing: 0.04em;
-  animation: pulse 1.5s ease-in-out infinite;
+  animation: pulse 1500ms var(--animation-easing, ease-in-out) var(--animation-delay, 0ms) var(--animation-iteration-count, infinite);
 }
 
 @keyframes idle {
@@ -76,13 +76,13 @@
   height: 80px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(155, 89, 182, 0.4) 0%, rgba(155, 89, 182, 0) 70%);
-  animation: cloudExpand 1.5s ease-out forwards;
+  animation: cloudExpand var(--animation-duration, 1500ms) var(--animation-easing, ease-out) forwards;
 }
 
 .poof {
   position: absolute;
   font-size: 28px;
-  animation: poofFade 1.2s ease-out forwards;
+  animation: poofFade var(--animation-duration, 1200ms) var(--animation-easing, ease-out) forwards;
 }
 
 .spore {
@@ -91,17 +91,20 @@
   height: 8px;
   background: #d4ff3a;
   border-radius: 50%;
-  animation: fly 1.5s ease-out forwards;
+  animation-name: fly;
+  animation-duration: var(--animation-duration, 1500ms);
+  animation-timing-function: var(--animation-easing, ease-out);
+  animation-fill-mode: forwards;
 }
 
-.s1 { animation-delay: 0.0s; --x: -40px; --y: -50px; }
-.s2 { animation-delay: 0.05s; --x: 35px; --y: -45px; }
-.s3 { animation-delay: 0.1s; --x: -50px; --y: 10px; }
-.s4 { animation-delay: 0.05s; --x: 45px; --y: 15px; }
-.s5 { animation-delay: 0.15s; --x: -20px; --y: -55px; }
-.s6 { animation-delay: 0.1s; --x: 55px; --y: -20px; }
-.s7 { animation-delay: 0.08s; --x: -45px; --y: 35px; }
-.s8 { animation-delay: 0.12s; --x: 25px; --y: 45px; }
+.s1 { animation-delay: var(--animation-delay, 0ms); --x: -40px; --y: -50px; }
+.s2 { animation-delay: calc(var(--animation-delay, 0ms) + 50ms); --x: 35px; --y: -45px; }
+.s3 { animation-delay: calc(var(--animation-delay, 0ms) + 100ms); --x: -50px; --y: 10px; }
+.s4 { animation-delay: calc(var(--animation-delay, 0ms) + 50ms); --x: 45px; --y: 15px; }
+.s5 { animation-delay: calc(var(--animation-delay, 0ms) + 150ms); --x: -20px; --y: -55px; }
+.s6 { animation-delay: calc(var(--animation-delay, 0ms) + 100ms); --x: 55px; --y: -20px; }
+.s7 { animation-delay: calc(var(--animation-delay, 0ms) + 80ms); --x: -45px; --y: 35px; }
+.s8 { animation-delay: calc(var(--animation-delay, 0ms) + 120ms); --x: 25px; --y: 45px; }
 
 @keyframes fly {
   0% {

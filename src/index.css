@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Neue Montreal';
-  src: url('./assets/fonts/NeueMontreal-Regular.woff2') format('woff2');
+  src: url('./assets/fonts/NeueMontreal-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -8,16 +8,16 @@
 
 @font-face {
   font-family: 'Neue Montreal';
-  src: url('./assets/fonts/NeueMontreal-Medium.woff2') format('woff2');
+  src: url('./assets/fonts/NeueMontreal-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Neue Montreal';
-  src: url('./assets/fonts/NeueMontreal-Bold.woff2') format('woff2');
-  font-weight: 700;
+  font-family: 'PP Neue Montreal Mono';
+  src: url('./assets/fonts/PPNeueMontrealMono-Book.otf') format('opentype');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -35,4 +35,9 @@ body {
   background-color: #0A0A0A;
   color: #F5F5F4;
   line-height: 1.6;
+}
+
+button,
+input {
+  font: inherit;
 }

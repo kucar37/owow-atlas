@@ -10,63 +10,65 @@
   top: -20px;
   opacity: 0;
   font-size: 18px;
-  animation: fall linear infinite;
+  animation-name: fall;
+  animation-timing-function: var(--animation-easing, linear);
+  animation-iteration-count: var(--animation-iteration-count, infinite);
 }
 
 .p1 {
   left: 10%;
   font-size: 16px;
   color: #ffb7d5;
-  animation-duration: 4s;
-  animation-delay: 0s;
+  animation-duration: var(--animation-duration, 4000ms);
+  animation-delay: var(--animation-delay, 0ms);
 }
 
 .p2 {
   left: 30%;
   font-size: 12px;
   color: #ffc9de;
-  animation-duration: 5s;
-  animation-delay: 1.2s;
+  animation-duration: var(--animation-duration, 4000ms);
+  animation-delay: calc(var(--animation-delay, 0ms) + 1200ms);
 }
 
 .p3 {
   left: 55%;
   font-size: 20px;
   color: #ff9ec4;
-  animation-duration: 4.5s;
-  animation-delay: 0.5s;
+  animation-duration: var(--animation-duration, 4000ms);
+  animation-delay: calc(var(--animation-delay, 0ms) + 500ms);
 }
 
 .p4 {
   left: 75%;
   font-size: 14px;
   color: #ffd4e8;
-  animation-duration: 5.5s;
-  animation-delay: 2s;
+  animation-duration: var(--animation-duration, 4000ms);
+  animation-delay: calc(var(--animation-delay, 0ms) + 2000ms);
 }
 
 .p5 {
   left: 45%;
   font-size: 10px;
   color: #ffaed0;
-  animation-duration: 4.2s;
-  animation-delay: 3s;
+  animation-duration: var(--animation-duration, 4000ms);
+  animation-delay: calc(var(--animation-delay, 0ms) + 3000ms);
 }
 
 .p6 {
   left: 85%;
   font-size: 16px;
   color: #ffb7d5;
-  animation-duration: 4.8s;
-  animation-delay: 1.8s;
+  animation-duration: var(--animation-duration, 4000ms);
+  animation-delay: calc(var(--animation-delay, 0ms) + 1800ms);
 }
 
 .p7 {
   left: 20%;
   font-size: 13px;
   color: #ffc0d8;
-  animation-duration: 5.2s;
-  animation-delay: 2.5s;
+  animation-duration: var(--animation-duration, 4000ms);
+  animation-delay: calc(var(--animation-delay, 0ms) + 2500ms);
 }
 
 @keyframes fall {
