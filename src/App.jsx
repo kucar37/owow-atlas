@@ -22,7 +22,7 @@ const ANIMATIONS = [
     category: 'Entrance',
     platforms: ['Web'],
     library: 'CSS',
-    description: 'Falling cherry blossom petals with a swaying branch.',
+    description: 'Falling cherry blossom petals with rotation.',
     component: <CherryBlossom />,
   },
   {

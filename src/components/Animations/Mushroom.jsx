@@ -21,7 +21,6 @@ export default function Mushroom() {
             <div className={styles.dot} style={{ top: '22px', left: '8px' }} />
           </div>
           <div className={styles.stem} />
-          <div className={styles.hoverHint}>click me</div>
         </div>
       ) : (
         <div className={styles.explosion}>
