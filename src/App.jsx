@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import FilterSidebar from './components/FilterSidebar/FilterSidebar';
+import Toolbar from './components/Toolbar/Toolbar';
 import FadeIn from './components/Animations/FadeIn';
 import CherryBlossom from './components/Animations/CherryBlossom';
 import styles from './App.module.css';
@@ -84,45 +85,85 @@ const DEFAULT_FILTERS = {
 
 export default function App() {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [query, setQuery]     = useState('');          // search text
+  const [sortBy, setSortBy]   = useState('name-asc');  // active sort option
+  const [view, setView]       = useState('grid');      // 'grid' | 'list'
 
   const visible = useMemo(() => {
-    return ANIMATIONS.filter(a => {
+    // 1. Sidebar filters
+    let result = ANIMATIONS.filter(a => {
       if (filters.categories.size && !filters.categories.has(a.category)) return false;
       if (filters.platforms.size  && !a.platforms.some(p => filters.platforms.has(p))) return false;
       if (filters.libraries.size  && !filters.libraries.has(a.library)) return false;
       return true;
     });
-  }, [filters]);
+
+    // 2. Search across name, category, library and description
+    const q = query.trim().toLowerCase();
+    if (q) {
+      result = result.filter(a =>
+        a.name.toLowerCase().includes(q) ||
+        a.category.toLowerCase().includes(q) ||
+        a.library.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q)
+      );
+    }
+
+    // 3. Sort (copy first so the original ANIMATIONS array is never mutated)
+    return [...result].sort((a, b) => {
+      if (sortBy === 'name-desc') return b.name.localeCompare(a.name);
+      if (sortBy === 'category')  return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+      return a.name.localeCompare(b.name); // 'name-asc' (default)
+    });
+  }, [filters, query, sortBy]);
 
   return (
-    <div className={styles.layout}>
+    <div className={styles.page}>
 
-      <FilterSidebar
-        animations={ANIMATIONS}
-        filters={filters}
-        onChange={setFilters}
+      <Toolbar
+        query={query}
+        onQueryChange={setQuery}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        view={view}
+        onViewChange={setView}
       />
 
-      <main style={{ flex: 1 }}>
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 16 }}>
-          {visible.length} of {ANIMATIONS.length} animations
-        </p>
-          <div className={styles.grid}>
-          {visible.map(a => (
-            <AnimationCard
-              key={a.id}
-              name={a.name}
-              category={a.category}
-              platform={a.platforms}
-              library={a.library}
-              description={a.description}
-            >
-              {a.component}
-            </AnimationCard>
-          ))}
-        </div>
-      </main>
+      <div className={styles.layout}>
 
+        <FilterSidebar
+          animations={ANIMATIONS}
+          filters={filters}
+          onChange={setFilters}
+        />
+
+        <main className={styles.main}>
+          <p className={styles.count}>
+            {visible.length} of {ANIMATIONS.length} animations
+          </p>
+
+          {visible.length === 0 ? (
+            <p className={styles.empty}>No animations match your search.</p>
+          ) : (
+            <div className={view === 'list' ? styles.list : styles.grid}>
+              {visible.map(a => (
+                <AnimationCard
+                  key={a.id}
+                  name={a.name}
+                  category={a.category}
+                  platform={a.platforms}
+                  library={a.library}
+                  description={a.description}
+                  view={view}
+                >
+                  {a.component}
+                </AnimationCard>
+              ))}
+            </div>
+          )}
+        </main>
+
+      </div>
     </div>
   );
 }
