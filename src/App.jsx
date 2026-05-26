@@ -5,6 +5,10 @@ import FadeIn from './components/Animations/FadeIn';
 import CherryBlossom from './components/Animations/CherryBlossom';
 import styles from './App.module.css';
 import Mushroom from './components/Animations/Mushroom';
+import TwinklingStars from './components/Animations/TwinklingStars';
+import BounceCards from './components/Animations/BounceCards';
+import DecryptedTextDemo from './components/Animations/DecryptedText';
+import ScrambledTextDemo from './components/Animations/ScrambledText';
 
 const ANIMATIONS = [
   {
@@ -33,7 +37,43 @@ const ANIMATIONS = [
     library: 'CSS',
     description: 'A cute mushroom that explodes when clicked.',
     component: <Mushroom />,
-  }
+  },
+  {
+    id: 'twinkling-stars',
+    name: 'Twinkling Stars',
+    category: 'Entrance',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Stars appear one by one with a rotating twinkle effect.',
+    component: <TwinklingStars />,
+  },
+  {
+    id: 'bounce-cards',
+    name: 'Bounce Cards',
+    category: 'Entrance',
+    platforms: ['Web'],
+    library: 'GSAP',
+    description: 'Cards bounce in with an elastic spring effect.',
+    component: <BounceCards />,
+  },
+  {
+    id: 'decrypted-text',
+    name: 'Decrypted Text',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Text scrambles on hover and reveals the original message.',
+    component: <DecryptedTextDemo />,
+  },
+  {
+    id: 'scrambled-text',
+    name: 'Scrambled Text',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Characters scramble when the cursor moves near them.',
+    component: <ScrambledTextDemo />,
+  },
 ];
 
 const DEFAULT_FILTERS = {
