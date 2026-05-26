@@ -3,6 +3,7 @@ import AnimationCard from './components/AnimationCard/AnimationCard';
 import AnimationDetail from './components/AnimationDetail/AnimationDetail';
 import FilterSidebar from './components/FilterSidebar/FilterSidebar';
 import Toolbar from './components/Toolbar/Toolbar';
+import Navbar from './components/Navbar/Navbar';
 import FadeIn from './components/Animations/FadeIn';
 import CherryBlossom from './components/Animations/CherryBlossom';
 import Mushroom from './components/Animations/Mushroom';
@@ -521,50 +522,58 @@ export default function App() {
   }
 
   return (
-    <div className={styles.page}>
-      <Toolbar
-        query={query}
-        onQueryChange={setQuery}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        view={view}
-        onViewChange={setView}
+    <>
+      <Navbar
+        category="all"
+        current="animations"
+        onHome={() => setSelectedAnimation(null)}
       />
-
-      <div className={styles.layout}>
-        <FilterSidebar
-          animations={ANIMATIONS}
-          filters={filters}
-          onChange={setFilters}
+  
+      <div className={styles.page}>
+        <Toolbar
+          query={query}
+          onQueryChange={setQuery}
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+          view={view}
+          onViewChange={setView}
         />
-
-        <main className={styles.main}>
-          <p className={styles.count}>
-            {visible.length} of {ANIMATIONS.length} animations
-          </p>
-
-          {visible.length === 0 ? (
-            <p className={styles.empty}>No animations match your search.</p>
-          ) : (
-            <div className={view === 'list' ? styles.list : styles.grid}>
-              {visible.map((a) => (
-                <AnimationCard
-                  key={a.id}
-                  name={a.name}
-                  category={a.category}
-                  platform={a.platforms}
-                  library={a.library}
-                  description={a.description}
-                  view={view}
-                  onClick={() => setSelectedAnimation(a)}
-                >
-                  {a.component}
-                </AnimationCard>
-              ))}
-            </div>
-          )}
-        </main>
+  
+        <div className={styles.layout}>
+          <FilterSidebar
+            animations={ANIMATIONS}
+            filters={filters}
+            onChange={setFilters}
+          />
+  
+          <main className={styles.main}>
+            <p className={styles.count}>
+              {visible.length} of {ANIMATIONS.length} animations
+            </p>
+  
+            {visible.length === 0 ? (
+              <p className={styles.empty}>No animations match your search.</p>
+            ) : (
+              <div className={view === 'list' ? styles.list : styles.grid}>
+                {visible.map((a) => (
+                  <AnimationCard
+                    key={a.id}
+                    name={a.name}
+                    category={a.category}
+                    platform={a.platforms}
+                    library={a.library}
+                    description={a.description}
+                    view={view}
+                    onClick={() => setSelectedAnimation(a)}
+                  >
+                    {a.component}
+                  </AnimationCard>
+                ))}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

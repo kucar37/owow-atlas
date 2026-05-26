@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styles from './Toolbar.module.css';
 
-// Available sort options shown in the dropdown
 const SORT_OPTIONS = [
   { value: 'name-asc',  label: 'Name (A–Z)' },
   { value: 'name-desc', label: 'Name (Z–A)' },
@@ -18,7 +17,6 @@ export default function Toolbar({
 }) {
   const inputRef = useRef(null);
 
-  // Focus the search field when the user presses Cmd/Ctrl + K
   useEffect(() => {
     const handleKey = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -100,7 +98,6 @@ export default function Toolbar({
   );
 }
 
-/* ---- Inline SVG icons (no extra dependency needed) ---- */
 
 function SearchIcon() {
   return (
