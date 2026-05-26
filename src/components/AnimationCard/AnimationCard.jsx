@@ -6,6 +6,7 @@ export default function AnimationCard({
   platform = 'Web',
   library = 'GSAP',
   description = '',
+  view = 'grid',
   children,
   onClick,
 }) {
@@ -21,7 +22,7 @@ export default function AnimationCard({
 
   return (
     <article
-      className={styles.card}
+      className={`${styles.card} ${view === 'list' ? styles.cardList : ''}`}
       data-category={category.toLowerCase()}
       data-platform={platforms.map((p) => p.toLowerCase()).join(',')}
       data-library={library.toLowerCase()}
@@ -34,7 +35,7 @@ export default function AnimationCard({
       <div className={styles.preview}>
         {children}
       </div>
-
+  
       <div className={styles.info}>
         <h3 className={styles.name}>{name}</h3>
         <div className={styles.tags}>

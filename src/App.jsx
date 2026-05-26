@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import AnimationDetail from './components/AnimationDetail/AnimationDetail';
 import FilterSidebar from './components/FilterSidebar/FilterSidebar';
-
+import Toolbar from './components/Toolbar/Toolbar';
 import FadeIn from './components/Animations/FadeIn';
 import CherryBlossom from './components/Animations/CherryBlossom';
 import Mushroom from './components/Animations/Mushroom';
@@ -473,20 +473,47 @@ export default function App() {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [selectedAnimation, setSelectedAnimation] = useState(null);
 
+  const [query, setQuery] = useState('');
+  const [sortBy, setSortBy] = useState('name-asc');
+  const [view, setView] = useState('grid');
+
   const visible = useMemo(() => {
-    return ANIMATIONS.filter((animation) => {
-      if (filters.categories.size && !filters.categories.has(animation.category)) return false;
-      if (filters.platforms.size && !animation.platforms.some((platform) => filters.platforms.has(platform))) return false;
-      if (filters.libraries.size && !filters.libraries.has(animation.library)) return false;
+    let result = ANIMATIONS.filter((a) => {
+      if (filters.categories.size && !filters.categories.has(a.category)) return false;
+      if (filters.platforms.size && !a.platforms.some((p) => filters.platforms.has(p))) return false;
+      if (filters.libraries.size && !filters.libraries.has(a.library)) return false;
       return true;
     });
-  }, [filters]);
+
+    const q = query.trim().toLowerCase();
+
+    if (q) {
+      result = result.filter((a) =>
+        a.name.toLowerCase().includes(q) ||
+        a.category.toLowerCase().includes(q) ||
+        a.library.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q)
+      );
+    }
+
+    return [...result].sort((a, b) => {
+      if (sortBy === 'name-desc') return b.name.localeCompare(a.name);
+
+      if (sortBy === 'category') {
+        return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+      }
+
+      return a.name.localeCompare(b.name);
+    });
+  }, [filters, query, sortBy]);
 
   if (selectedAnimation) {
     return (
       <AnimationDetail
         animation={selectedAnimation}
-        relatedAnimations={ANIMATIONS.filter((animation) => animation.id !== selectedAnimation.id)}
+        relatedAnimations={ANIMATIONS.filter(
+          (animation) => animation.id !== selectedAnimation.id
+        )}
         onBack={() => setSelectedAnimation(null)}
         onSelect={setSelectedAnimation}
       />
@@ -494,34 +521,50 @@ export default function App() {
   }
 
   return (
-    <div className={styles.layout}>
-      <FilterSidebar
-        animations={ANIMATIONS}
-        filters={filters}
-        onChange={setFilters}
+    <div className={styles.page}>
+      <Toolbar
+        query={query}
+        onQueryChange={setQuery}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        view={view}
+        onViewChange={setView}
       />
 
-      <main className={styles.mainContent}>
-        <p className={styles.resultCount}>
-          {visible.length} of {ANIMATIONS.length} animations
-        </p>
+      <div className={styles.layout}>
+        <FilterSidebar
+          animations={ANIMATIONS}
+          filters={filters}
+          onChange={setFilters}
+        />
 
-        <div className={styles.grid}>
-          {visible.map((animation) => (
-            <AnimationCard
-              key={animation.id}
-              name={animation.name}
-              category={animation.category}
-              platform={animation.platforms}
-              library={animation.library}
-              description={animation.description}
-              onClick={() => setSelectedAnimation(animation)}
-            >
-              {animation.component}
-            </AnimationCard>
-          ))}
-        </div>
-      </main>
+        <main className={styles.main}>
+          <p className={styles.count}>
+            {visible.length} of {ANIMATIONS.length} animations
+          </p>
+
+          {visible.length === 0 ? (
+            <p className={styles.empty}>No animations match your search.</p>
+          ) : (
+            <div className={view === 'list' ? styles.list : styles.grid}>
+              {visible.map((a) => (
+                <AnimationCard
+                  key={a.id}
+                  name={a.name}
+                  category={a.category}
+                  platform={a.platforms}
+                  library={a.library}
+                  description={a.description}
+                  view={view}
+                  onClick={() => setSelectedAnimation(a)}
+                >
+                  {a.component}
+                </AnimationCard>
+              ))}
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }
