@@ -2,9 +2,15 @@ import { useMemo, useState } from 'react';
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import AnimationDetail from './components/AnimationDetail/AnimationDetail';
 import FilterSidebar from './components/FilterSidebar/FilterSidebar';
+
 import FadeIn from './components/Animations/FadeIn';
 import CherryBlossom from './components/Animations/CherryBlossom';
 import Mushroom from './components/Animations/Mushroom';
+import TwinklingStars from './components/Animations/TwinklingStars';
+import BounceCards from './components/Animations/BounceCards';
+import DecryptedTextDemo from './components/Animations/DecryptedText';
+import ScrambledTextDemo from './components/Animations/ScrambledText';
+
 import styles from './App.module.css';
 
 const fadeInCode = `.box {
@@ -52,6 +58,42 @@ const mushroomCode = `.mushroom {
   50% { transform: translateY(-4px); }
 }`;
 
+const twinklingStarsCode = `.star {
+  animation: twinkle var(--animation-duration, 1200ms) var(--animation-easing, ease-in-out) infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}`;
+
+const bounceCardsCode = `.card {
+  animation: bounce var(--animation-duration, 900ms) var(--animation-easing, cubic-bezier(0.34, 1.56, 0.64, 1)) infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}`;
+
+const decryptedTextCode = `.text {
+  animation: reveal var(--animation-duration, 1200ms) steps(12) forwards;
+}
+
+@keyframes reveal {
+  from { filter: blur(6px); opacity: 0.4; }
+  to { filter: blur(0); opacity: 1; }
+}`;
+
+const scrambledTextCode = `.letter {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.letter:hover {
+  transform: translateY(-4px) rotate(4deg);
+  opacity: 0.8;
+}`;
+
 const ANIMATIONS = [
   {
     id: 'fade-in',
@@ -80,6 +122,7 @@ export default function FadeIn() {
 }`,
       css: fadeInCode,
       native: `const element = document.querySelector('.box');
+
 element.animate([
   { opacity: 0, transform: 'translateY(8px)' },
   { opacity: 1, transform: 'translateY(0)' },
@@ -135,6 +178,7 @@ export default function CherryBlossom() {
 }`,
       css: cherryBlossomCode,
       native: `const petals = document.querySelectorAll('.petal');
+
 petals.forEach((petal, index) => {
   petal.animate([
     { opacity: 0, transform: 'translateY(-10px) rotate(0deg)' },
@@ -195,6 +239,7 @@ export default function Mushroom() {
 }`,
       css: mushroomCode,
       native: `const mushroom = document.querySelector('.mushroom');
+
 mushroom.addEventListener('click', () => {
   mushroom.classList.add('is-exploding');
   setTimeout(() => mushroom.classList.remove('is-exploding'), 2000);
@@ -214,6 +259,208 @@ mushroom.addEventListener('click', () => {
       'Provide a non-motion fallback for reduced-motion users.',
     ],
   },
+  {
+    id: 'twinkling-stars',
+    name: 'Twinkling Stars',
+    category: 'Entrance',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Stars appear one by one with a rotating twinkle effect.',
+    component: <TwinklingStars />,
+    duration: 1200,
+    delay: 0,
+    easingOption: 'ease-out',
+    easing: 'ease-out',
+    loop: true,
+    tags: ['stars', 'twinkle', 'decorative'],
+    bundle: '@owow/motion/entrance',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import TwinklingStars from './TwinklingStars';
+
+export default function Example() {
+  return <TwinklingStars />;
+}`,
+      css: twinklingStarsCode,
+      native: `const stars = document.querySelectorAll('.star');
+
+stars.forEach((star, index) => {
+  star.animate([
+    { opacity: 0.2, transform: 'scale(0.8) rotate(0deg)' },
+    { opacity: 1, transform: 'scale(1.2) rotate(180deg)' },
+  ], {
+    duration: 1200,
+    delay: index * 120,
+    iterations: Infinity,
+    direction: 'alternate',
+  });
+});`,
+    },
+    usage: {
+      count: 9,
+      projects: [
+        { name: 'Launch Page', status: 'prod' },
+        { name: 'Hero Concept', status: 'draft' },
+        { name: 'Brand Motion Kit', status: 'test' },
+      ],
+    },
+    accessibility: [
+      'Decorative stars should not distract from important content.',
+      'Reduce or disable looping for reduced-motion users.',
+      'Keep contrast comfortable on dark backgrounds.',
+    ],
+  },
+  {
+    id: 'bounce-cards',
+    name: 'Bounce Cards',
+    category: 'Entrance',
+    platforms: ['Web'],
+    library: 'GSAP',
+    description: 'Cards bounce in with an elastic spring effect.',
+    component: <BounceCards />,
+    duration: 900,
+    delay: 0,
+    easingOption: 'spring',
+    easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    loop: true,
+    tags: ['cards', 'bounce', 'spring'],
+    bundle: '@owow/motion/entrance',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import BounceCards from './BounceCards';
+
+export default function Example() {
+  return <BounceCards />;
+}`,
+      css: bounceCardsCode,
+      native: `const cards = document.querySelectorAll('.card');
+
+cards.forEach((card, index) => {
+  card.animate([
+    { opacity: 0, transform: 'translateY(30px) scale(0.95)' },
+    { opacity: 1, transform: 'translateY(0) scale(1)' },
+  ], {
+    duration: 900,
+    delay: index * 80,
+    easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    fill: 'both',
+  });
+});`,
+    },
+    usage: {
+      count: 15,
+      projects: [
+        { name: 'Case Cards', status: 'prod' },
+        { name: 'Portfolio Grid', status: 'prod' },
+        { name: 'Prototype Board', status: 'draft' },
+      ],
+    },
+    accessibility: [
+      'Avoid strong bouncing on large content blocks.',
+      'Use stagger carefully so users do not wait too long.',
+      'Respect reduced-motion settings.',
+    ],
+  },
+  {
+    id: 'decrypted-text',
+    name: 'Decrypted Text',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Text scrambles on hover and reveals the original message.',
+    component: <DecryptedTextDemo />,
+    duration: 1200,
+    delay: 0,
+    easingOption: 'ease-out',
+    easing: 'ease-out',
+    loop: false,
+    tags: ['text', 'hover', 'scramble'],
+    bundle: '@owow/motion/hover',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import DecryptedTextDemo from './DecryptedText';
+
+export default function Example() {
+  return <DecryptedTextDemo />;
+}`,
+      css: decryptedTextCode,
+      native: `const text = document.querySelector('.text');
+
+text.addEventListener('mouseenter', () => {
+  text.classList.add('is-revealing');
+});`,
+    },
+    usage: {
+      count: 6,
+      projects: [
+        { name: 'Cyber Landing', status: 'draft' },
+        { name: 'Portfolio Intro', status: 'test' },
+        { name: 'Interactive Header', status: 'prod' },
+      ],
+    },
+    accessibility: [
+      'Do not use scrambled text for critical information only.',
+      'Keep the final readable text available in the DOM.',
+      'Avoid rapid flashing or unreadable text for long periods.',
+    ],
+  },
+  {
+    id: 'scrambled-text',
+    name: 'Scrambled Text',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Characters scramble when the cursor moves near them.',
+    component: <ScrambledTextDemo />,
+    duration: 1000,
+    delay: 0,
+    easingOption: 'ease-out',
+    easing: 'ease-out',
+    loop: false,
+    tags: ['text', 'cursor', 'interactive'],
+    bundle: '@owow/motion/hover',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import ScrambledTextDemo from './ScrambleText';
+
+export default function Example() {
+  return <ScrambledTextDemo />;
+}`,
+      css: scrambledTextCode,
+      native: `const letters = document.querySelectorAll('.letter');
+
+letters.forEach((letter) => {
+  letter.addEventListener('mouseenter', () => {
+    letter.classList.add('is-scrambled');
+  });
+});`,
+    },
+    usage: {
+      count: 8,
+      projects: [
+        { name: 'Experimental Nav', status: 'draft' },
+        { name: 'Motion Lab', status: 'test' },
+        { name: 'Creative Portfolio', status: 'prod' },
+      ],
+    },
+    accessibility: [
+      'Do not make important text unreadable on hover.',
+      'Keep interaction optional and not required for navigation.',
+      'Respect reduced-motion preferences.',
+    ],
+  },
 ];
 
 const DEFAULT_FILTERS = {
@@ -227,10 +474,10 @@ export default function App() {
   const [selectedAnimation, setSelectedAnimation] = useState(null);
 
   const visible = useMemo(() => {
-    return ANIMATIONS.filter(a => {
-      if (filters.categories.size && !filters.categories.has(a.category)) return false;
-      if (filters.platforms.size && !a.platforms.some(p => filters.platforms.has(p))) return false;
-      if (filters.libraries.size && !filters.libraries.has(a.library)) return false;
+    return ANIMATIONS.filter((animation) => {
+      if (filters.categories.size && !filters.categories.has(animation.category)) return false;
+      if (filters.platforms.size && !animation.platforms.some((platform) => filters.platforms.has(platform))) return false;
+      if (filters.libraries.size && !filters.libraries.has(animation.library)) return false;
       return true;
     });
   }, [filters]);
@@ -258,18 +505,19 @@ export default function App() {
         <p className={styles.resultCount}>
           {visible.length} of {ANIMATIONS.length} animations
         </p>
+
         <div className={styles.grid}>
-          {visible.map(a => (
+          {visible.map((animation) => (
             <AnimationCard
-              key={a.id}
-              name={a.name}
-              category={a.category}
-              platform={a.platforms}
-              library={a.library}
-              description={a.description}
-              onClick={() => setSelectedAnimation(a)}
+              key={animation.id}
+              name={animation.name}
+              category={animation.category}
+              platform={animation.platforms}
+              library={animation.library}
+              description={animation.description}
+              onClick={() => setSelectedAnimation(animation)}
             >
-              {a.component}
+              {animation.component}
             </AnimationCard>
           ))}
         </div>
