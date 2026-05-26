@@ -9,6 +9,7 @@ import TwinklingStars from './components/Animations/TwinklingStars';
 import BounceCards from './components/Animations/BounceCards';
 import DecryptedTextDemo from './components/Animations/DecryptedText';
 import ScrambledTextDemo from './components/Animations/ScrambledText';
+import Navbar from './components/Navbar/Navbar';
 
 const ANIMATIONS = [
   {
@@ -95,34 +96,36 @@ export default function App() {
   }, [filters]);
 
   return (
-    <div className={styles.layout}>
+    <div className={styles.page}>
+      <Navbar />
 
-      <FilterSidebar
-        animations={ANIMATIONS}
-        filters={filters}
-        onChange={setFilters}
-      />
+      <div className={styles.layout}>
+        <FilterSidebar
+          animations={ANIMATIONS}
+          filters={filters}
+          onChange={setFilters}
+        />
 
-      <main style={{ flex: 1 }}>
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 16 }}>
-          {visible.length} of {ANIMATIONS.length} animations
-        </p>
+        <main style={{ flex: 1 }}>
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 16 }}>
+            {visible.length} of {ANIMATIONS.length} animations
+          </p>
           <div className={styles.grid}>
-          {visible.map(a => (
-            <AnimationCard
-              key={a.id}
-              name={a.name}
-              category={a.category}
-              platform={a.platforms}
-              library={a.library}
-              description={a.description}
-            >
-              {a.component}
-            </AnimationCard>
-          ))}
-        </div>
-      </main>
-
+            {visible.map(a => (
+              <AnimationCard
+                key={a.id}
+                name={a.name}
+                category={a.category}
+                platform={a.platforms}
+                library={a.library}
+                description={a.description}
+              >
+                {a.component}
+              </AnimationCard>
+            ))}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
