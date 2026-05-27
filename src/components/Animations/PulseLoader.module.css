@@ -1,0 +1,34 @@
+.loader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loader span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #d4ff3a;
+  animation: pulse var(--animation-duration, 900ms) var(--animation-easing, ease-in-out) var(--animation-delay, 0ms) var(--animation-iteration-count, infinite);
+}
+
+.loader span:nth-child(2) {
+  animation-delay: 120ms;
+  opacity: 0.75;
+}
+
+.loader span:nth-child(3) {
+  animation-delay: 240ms;
+  opacity: 0.5;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(0.65); opacity: 0.35; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader span {
+    animation: none;
+  }
+}

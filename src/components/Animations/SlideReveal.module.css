@@ -1,0 +1,59 @@
+.wrapper {
+  position: relative;
+  width: 160px;
+  height: 84px;
+  overflow: hidden;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  background: #141414;
+}
+
+.panel {
+  height: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: slideIn var(--animation-duration, 1100ms) var(--animation-easing, cubic-bezier(0.16, 1, 0.3, 1)) var(--animation-delay, 0ms) var(--animation-iteration-count, infinite);
+}
+
+.panel span {
+  color: #777;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.panel strong {
+  color: #f5f5f4;
+  font-size: 18px;
+}
+
+.revealBar {
+  position: absolute;
+  inset: 0;
+  background: #d4ff3a;
+  transform-origin: left;
+  animation: wipe var(--animation-duration, 1100ms) var(--animation-easing, cubic-bezier(0.16, 1, 0.3, 1)) var(--animation-delay, 0ms) var(--animation-iteration-count, infinite);
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateX(-26px); }
+  45%, 80% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(18px); }
+}
+
+@keyframes wipe {
+  0% { transform: scaleX(1); }
+  45%, 100% { transform: scaleX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .revealBar {
+    animation: none;
+  }
+
+  .revealBar {
+    display: none;
+  }
+}
