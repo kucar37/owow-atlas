@@ -1,0 +1,156 @@
+.detail-navbar {
+  width: 100%;
+  height: 74px;
+  background: #070707;
+  border-bottom: 1px solid #1d1d1d;
+
+  display: flex;
+  align-items: center;
+}
+
+.detail-navbar-container {
+  width: 100%;
+
+  padding: 0 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+}
+
+/* LEFT */
+
+.detail-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.atlas-logo {
+  display: grid;
+  grid-template-columns: repeat(2, 9px);
+  gap: 5px;
+}
+
+.atlas-logo span {
+  width: 9px;
+  height: 9px;
+  border-radius: 1px;
+  background: #d7ff4f;
+}
+
+.atlas-logo span:nth-child(2),
+.atlas-logo span:nth-child(3) {
+  background: #f5f5f5;
+}
+
+.atlas-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.atlas-brand-title {
+  color: #f5f5f5;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.atlas-brand-subtitle {
+  color: #777;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* CENTER */
+
+.detail-navbar-center {
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  color: #777;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+/* RIGHT */
+
+.detail-navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.back-button {
+  height: 38px;
+
+  padding: 0 18px;
+
+  background: transparent;
+
+  border: 1px solid #232323;
+
+  color: #d6d6d6;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.back-button:hover {
+  border-color: #3a3a3a;
+  color: #ffffff;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .detail-navbar {
+    height: auto;
+    padding: 18px 0;
+  }
+
+  .detail-navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .detail-navbar-center {
+    position: static;
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-navbar-container {
+    padding: 0 20px;
+  }
+
+  .detail-navbar-center {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .atlas-brand-title {
+    font-size: 16px;
+  }
+
+  .atlas-brand-subtitle {
+    font-size: 11px;
+  }
+
+  .back-button {
+    width: 100%;
+  }
+}

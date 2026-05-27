@@ -74,7 +74,11 @@ export default function AnimationDetail({
       <main className={styles.page}>
         <div className={styles.body}>
           <section className={styles.content}>
-            <div className={styles.tags}>
+  <button className={styles.backButton} type="button" onClick={onBack}>
+    ← Back to library
+  </button>
+
+  <div className={styles.tags}>
               <span className={styles.tagAccent}>{animation.category}</span>
 
               {platforms.map((platform) => (
