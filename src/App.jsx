@@ -13,6 +13,7 @@ import ScrambledTextDemo from './components/Animations/ScrambledText';
 import LogoLoopDemo from './components/Animations/LogoLoopDemo';
 import StickerPeel from './components/Animations/StickerPeel';
 import ImageTrailDemo from './components/Animations/ImageTrailDemo';
+import Navbar from './components/Navbar/Navbar';
 
 const ANIMATIONS = [
   {
@@ -148,52 +149,51 @@ export default function App() {
   }, [filters, query, sortBy]);
 
   return (
-    <div className={styles.page}>
+  <div className={styles.page}>
+    <Navbar />
 
-      <Toolbar
-        query={query}
-        onQueryChange={setQuery}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        view={view}
-        onViewChange={setView}
+    <Toolbar
+      query={query}
+      onQueryChange={setQuery}
+      sortBy={sortBy}
+      onSortChange={setSortBy}
+      view={view}
+      onViewChange={setView}
+    />
+
+    <div className={styles.layout}>
+      <FilterSidebar
+        animations={ANIMATIONS}
+        filters={filters}
+        onChange={setFilters}
       />
 
-      <div className={styles.layout}>
+      <main className={styles.main}>
+        <p className={styles.count}>
+          {visible.length} of {ANIMATIONS.length} animations
+        </p>
 
-        <FilterSidebar
-          animations={ANIMATIONS}
-          filters={filters}
-          onChange={setFilters}
-        />
-
-        <main className={styles.main}>
-          <p className={styles.count}>
-            {visible.length} of {ANIMATIONS.length} animations
-          </p>
-
-          {visible.length === 0 ? (
-            <p className={styles.empty}>No animations match your search.</p>
-          ) : (
-            <div className={view === 'list' ? styles.list : styles.grid}>
-              {visible.map(a => (
-                <AnimationCard
-                  key={a.id}
-                  name={a.name}
-                  category={a.category}
-                  platform={a.platforms}
-                  library={a.library}
-                  description={a.description}
-                  view={view}
-                >
-                  {a.component}
-                </AnimationCard>
-              ))}
-            </div>
-          )}
-        </main>
-
-      </div>
+        {visible.length === 0 ? (
+          <p className={styles.empty}>No animations match your search.</p>
+        ) : (
+          <div className={view === "list" ? styles.list : styles.grid}>
+            {visible.map((a) => (
+              <AnimationCard
+                key={a.id}
+                name={a.name}
+                category={a.category}
+                platform={a.platforms}
+                library={a.library}
+                description={a.description}
+                view={view}
+              >
+                {a.component}
+              </AnimationCard>
+            ))}
+          </div>
+        )}
+      </main>
     </div>
-  );
+  </div>
+);
 }
