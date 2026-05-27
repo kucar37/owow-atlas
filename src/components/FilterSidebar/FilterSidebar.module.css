@@ -52,11 +52,39 @@
 .option:hover { color: rgba(255,255,255,0.9); }
 
 .option input[type="checkbox"] {
-  width: 16px;      
-  height: 16px;     
-  accent-color: #d4ff3a;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.04);
   cursor: pointer;
   flex-shrink: 0;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.option input[type="checkbox"]:hover {
+  border-color: rgba(212,255,58,0.75);
+  background: rgba(212,255,58,0.08);
+}
+
+.option input[type="checkbox"]:checked {
+  background: #d4ff3a;
+  border-color: #d4ff3a;
+  box-shadow: 0 0 12px rgba(212,255,58,0.25);
+}
+
+.option input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid #050505;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 .optionLabel { flex: 1; }
