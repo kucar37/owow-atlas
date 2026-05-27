@@ -10,6 +10,9 @@ import TwinklingStars from './components/Animations/TwinklingStars';
 import BounceCards from './components/Animations/BounceCards';
 import DecryptedTextDemo from './components/Animations/DecryptedText';
 import ScrambledTextDemo from './components/Animations/ScrambledText';
+import LogoLoopDemo from './components/Animations/LogoLoopDemo';
+import StickerPeel from './components/Animations/StickerPeel';
+import ImageTrailDemo from './components/Animations/ImageTrailDemo';
 
 const ANIMATIONS = [
   {
@@ -75,6 +78,33 @@ const ANIMATIONS = [
     description: 'Characters scramble when the cursor moves near them.',
     component: <ScrambledTextDemo />,
   },
+  {
+    id: 'logo-loop',
+    name: 'Image Loop',        
+    category: 'Scroll',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Infinite scrolling image marquee that pauses on hover.',
+    component: <LogoLoopDemo />,
+  },
+  {
+    id: 'sticker-peel',
+    name: 'Sticker Peel',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'A sticker that peels back on hover and can be dragged around.',
+    component: <StickerPeel />,
+  },
+  {
+    id: 'image-trail',
+    name: 'Image Trail',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'GSAP',
+    description: 'Images follow the cursor in a trail as you move over the card.',
+    component: <ImageTrailDemo />,
+  },
 ];
 
 const DEFAULT_FILTERS = {
@@ -85,9 +115,9 @@ const DEFAULT_FILTERS = {
 
 export default function App() {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
-  const [query, setQuery]     = useState('');          // search text
-  const [sortBy, setSortBy]   = useState('name-asc');  // active sort option
-  const [view, setView]       = useState('grid');      // 'grid' | 'list'
+  const [query, setQuery]     = useState('');          
+  const [sortBy, setSortBy]   = useState('name-asc');  
+  const [view, setView]       = useState('grid');      
 
   const visible = useMemo(() => {
     // 1. Sidebar filters
