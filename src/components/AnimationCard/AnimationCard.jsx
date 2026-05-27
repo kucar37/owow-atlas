@@ -6,13 +6,14 @@ export default function AnimationCard({
   platform = 'Web',
   library = 'GSAP',
   description = '',
+  view = 'grid',
   children,
 }) {
   const platforms = Array.isArray(platform) ? platform : [platform];
 
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} ${view === 'list' ? styles.cardList : ''}`}
       data-category={category.toLowerCase()}
       data-platform={platforms.map((p) => p.toLowerCase()).join(',')}
       data-library={library.toLowerCase()}
