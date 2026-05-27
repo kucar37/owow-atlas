@@ -706,40 +706,55 @@ export default function App() {
       />
   
       <div className={styles.page}>
-      <section className={styles.hero} aria-labelledby="hero-title">
-  <div className={styles.heroText}>
-    <h1 id="hero-title">
-      One library<br />
-      <span>for every motion</span><br />
-      we ship.
-    </h1>
-  </div>
+<section className={styles.hero} aria-labelledby="hero-title">
+        <div className={styles.heroLeft}>
+          <h1 id="hero-title">
+            One library<br />
+            <span>for every motion</span><br />
+            we ship.
+          </h1>
 
-  <div className={styles.heroInfo}>
-    <div className={styles.heroStats}>
-      <div>
-        <strong>{ANIMATIONS.length}</strong>
-        <span>Animations</span>
-      </div>
-      <div>
-        <strong>{new Set(ANIMATIONS.map((animation) => animation.category)).size}</strong>
-        <span>Categories</span>
-      </div>
-      <div>
-        <strong>{new Set(ANIMATIONS.flatMap((animation) => animation.platforms)).size}</strong>
-        <span>Platforms</span>
-      </div>
-      <div>
-        <strong>v2.4</strong>
-        <span>Release</span>
-      </div>
-    </div>
+          <p className={styles.heroDesc}>
+            Browse, preview and lift production-ready motion. Every entry ships with tweakable parameters and a copiable snippet for React, Vue, and bare CSS.
+          </p>
 
-    <p>
-      Browse, preview and lift production-ready motion. Every entry ships with tweakable parameters and a copiable snippet for React, Vue, and bare CSS.
-    </p>
-  </div>
-</section>
+          <div className={styles.heroStats}>
+            <div>
+              <strong>{ANIMATIONS.length}</strong>
+              <span>Animations</span>
+            </div>
+            <div>
+              <strong>{new Set(ANIMATIONS.map((a) => a.category)).size}</strong>
+              <span>Categories</span>
+            </div>
+            <div>
+              <strong>{new Set(ANIMATIONS.flatMap((a) => a.platforms)).size}</strong>
+              <span>Platforms</span>
+            </div>
+            <div>
+              <strong>v2.4</strong>
+              <span>Release</span>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.heroRight}>
+          <span className={styles.featuredLabel}>FEATURED</span>
+          <div className={styles.featuredCard}>
+            <AnimationCard
+                name="Logo_Loop"
+                category="Scroll"
+                platform="Web"
+                library="CSS"
+                description="Infinite scrolling image marquee that pauses on hover."
+                dark
+                onClick={() => setSelectedAnimation(ANIMATIONS.find(a => a.id === 'logo-loop'))}
+            >
+              <LogoLoopDemo />
+            </AnimationCard>
+          </div>
+        </div>
+      </section>
         <Toolbar
           query={query}
           onQueryChange={setQuery}

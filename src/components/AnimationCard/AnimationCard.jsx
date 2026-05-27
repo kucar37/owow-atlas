@@ -7,6 +7,7 @@ export default function AnimationCard({
   library = 'GSAP',
   description = '',
   view = 'grid',
+  dark = false,
   children,
   onClick,
 }) {
@@ -21,21 +22,21 @@ export default function AnimationCard({
   }
 
   return (
-    <article
-      className={`${styles.card} ${view === 'list' ? styles.cardList : ''}`}
-      data-category={category.toLowerCase()}
-      data-platform={platforms.map((p) => p.toLowerCase()).join(',')}
-      data-library={library.toLowerCase()}
-      onClick={onClick}
-      onKeyDown={handleKeyDown}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      aria-label={onClick ? `Open ${name} animation details` : undefined}
-    >
-      <div className={styles.preview}>
-        {children}
-      </div>
-  
+      <article
+        className={`${styles.card} ${view === 'list' ? styles.cardList : ''} ${dark ? styles.cardDark : ''}`}
+        data-category={category.toLowerCase()}
+        data-platform={platforms.map((p) => p.toLowerCase()).join(',')}
+        data-library={library.toLowerCase()}
+        onClick={onClick}
+        onKeyDown={handleKeyDown}
+        role={onClick ? 'button' : undefined}
+        tabIndex={onClick ? 0 : undefined}
+        aria-label={onClick ? `Open ${name} animation details` : undefined}
+      >
+        <div className={`${styles.preview} ${dark ? styles.previewDark : ''}`}>
+          {children}
+        </div>
+
       <div className={styles.info}>
         <h3 className={styles.name}>{name}</h3>
         <div className={styles.tags}>

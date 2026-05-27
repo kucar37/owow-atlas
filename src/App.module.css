@@ -63,17 +63,19 @@
   }
 }
 
+/* ── Hero ──────────────────────────────────── */
+
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
-  gap: 48px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
   align-items: end;
-  padding: 30px 20px 48px 20px;
+  padding: 30px 20px 48px;
   border-bottom: 1px solid #1b1b1b;
 }
 
-.heroText h1 {
-  margin: 0;
+.heroLeft h1 {
+  margin: 0 0 32px;
   color: #f5f5f4;
   font-size: clamp(52px, 7vw, 112px);
   line-height: 0.92;
@@ -81,78 +83,95 @@
   font-weight: 500;
 }
 
-.heroText span {
+.heroLeft h1 span {
   color: #d4ff3a;
 }
 
-.heroInfo {
-  max-width: 560px;
-  justify-self: end;
-  transform: translate(-80px, -55px);
-}
-
 .heroStats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid #252525;
-  border-bottom: 1px solid #252525;
-  margin-bottom: 28px;
-}
-
-.heroStats div {
-  min-height: 78px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  border-left: 1px solid #252525;
-}
-
-.heroStats div:last-child {
-  border-right: 1px solid #252525;
+  gap: 32px;
+  padding: 16px 0;
+  border-top: 1px solid #252525;
 }
 
 .heroStats strong {
+  display: block;
   color: #f5f5f4;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
-  line-height: 1;
 }
 
 .heroStats span {
   color: #5d5d5d;
-  font-family: 'PP Neue Montreal Mono', monospace;
   font-size: 8px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.heroInfo p {
-  max-width: 430px;
-  margin: 0 auto;
+.heroDesc {
+  max-width: 100%;
   color: #b5b5b0;
   font-size: 13px;
   line-height: 1.5;
-  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+.heroRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: center;
+}
+
+.featuredLabel {
+  color: #d8ff57;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  margin-bottom: 10px;
+}
+
+.featuredCard {
+  max-width: 320px;
+  width: 100%;
+}
+
+.featuredCard > div {
+  background: #1a1a1a;
+  border-color: #252525;
 }
 
 @media (max-width: 1024px) {
   .hero {
     grid-template-columns: 1fr;
     gap: 32px;
-    padding: 42px 0 36px;
+    padding: 42px 20px 36px;
   }
 
-  .heroInfo {
-    max-width: none;
-    justify-self: stretch;
-    transform: none;
+  .heroLeft h1 {
+    margin-bottom: 24px;
+  }
+
+  .heroDesc {
+    margin-top: 20px;
+  }
+
+  .heroRight {
+    align-items: flex-start;
+  }
+
+  .featuredCard {
+    max-width: 300px;
+  }
+
+  .heroStats {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 640px) {
-  .heroText h1 {
+  .heroLeft h1 {
     font-size: clamp(46px, 16vw, 72px);
   }
 
@@ -163,5 +182,13 @@
   .heroStats div:nth-child(3),
   .heroStats div:nth-child(4) {
     border-top: 1px solid #252525;
+  }
+
+  .featuredCard {
+    max-width: 100%;
+  }
+
+  .heroRight {
+    display: none;
   }
 }
