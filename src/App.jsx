@@ -16,8 +16,21 @@ import StickerPeel from './components/Animations/StickerPeel';
 import ImageTrailDemo from './components/Animations/ImageTrailDemo';
 import SlideReveal from './components/Animations/SlideReveal';
 import PulseLoader from './components/Animations/PulseLoader';
+import StackDemo from './components/Animations/StackDemo';
+
 
 import styles from './App.module.css';
+
+const stackCode = `.stack-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 600px;
+}
+.card {
+  border-radius: 1rem;
+  overflow: hidden;
+}`;
 
 const fadeInCode = `.box {
   width: 60px;
@@ -639,7 +652,51 @@ letters.forEach((letter) => {
       'Disable pulsing for reduced-motion users.',
     ],
   },
+  {
+    id: 'card-stack',
+    name: 'Card Stack',
+    category: 'Interaction',
+    platforms: ['Web'],
+    library: 'Framer Motion',
+    description: 'An interactive, draggable deck of cards with elastic spring return and swipe-to-back mechanics.',
+    component: <StackDemo />,
+    duration: 600,
+    delay: 0,
+    easingOption: 'spring',
+    easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+    loop: true,
+    tags: ['cards', 'drag', 'framer-motion', 'gallery'],
+    bundle: '@owow/motion/interaction',
+    owner: 'Motion guild',
+    version: '1.0.0',
+    lastUpdated: '27 May 2026 by Paulien',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import Stack from './Stack';
+
+<Stack
+  randomRotation={true}
+  sensitivity={180}
+  sendToBackOnClick={true}
+  cards={images.map((src, i) => <img key={i} src={src} />)}
+/>`,
+      css: stackCode,
+      native: `// Uses Framer Motion for gesture tracking and physics orchestration`,
+    },
+    usage: {
+      count: 1,
+      projects: [
+        { name: 'Atlas Library', status: 'draft' }
+      ],
+    },
+    accessibility: [
+      'Supports click/tap fallback for non-mouse users.',
+      'Provide alternative text on card elements.',
+      'Respects motion restrictions if animations are globally disabled.'
+    ],
+  }
 ];
+
 
 const DEFAULT_FILTERS = {
   categories: new Set(),
