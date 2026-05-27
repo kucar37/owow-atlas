@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import AnimationDetail from './components/AnimationDetail/AnimationDetail';
 import FilterSidebar from './components/FilterSidebar/FilterSidebar';
@@ -719,7 +719,17 @@ export default function App() {
   const [query, setQuery]     = useState('');          
   const [sortBy, setSortBy]   = useState('name-asc');  
   const [view, setView]       = useState('grid');  
-  const [selectedAnimation, setSelectedAnimation] = useState(null);    
+  const [selectedAnimation, setSelectedAnimation] = useState(null);   
+  
+  useEffect(() => {
+    if (selectedAnimation) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto',
+      });
+    }
+  }, [selectedAnimation]);
 
   const visible = useMemo(() => {
     let result = ANIMATIONS.filter((a) => {

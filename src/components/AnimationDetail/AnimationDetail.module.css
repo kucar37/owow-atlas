@@ -79,6 +79,7 @@
   font: inherit;
   font-size: 13px;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .backButton:hover,
@@ -88,6 +89,12 @@
 .optionGroup button:hover {
   border-color: #d4ff3a;
   color: #d4ff3a;
+}
+
+.backButton:hover {
+  background: #d4ff3a;
+  color: #090909;
+  border-color: #d4ff3a;
 }
 
 .body {
