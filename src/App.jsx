@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import LibraryHero from "./components/Hero/LibraryHero";
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import FilterSidebar from './components/FilterSidebar/FilterSidebar';
 import FadeIn from './components/Animations/FadeIn';
@@ -10,7 +9,6 @@ import TwinklingStars from './components/Animations/TwinklingStars';
 import BounceCards from './components/Animations/BounceCards';
 import DecryptedTextDemo from './components/Animations/DecryptedText';
 import ScrambledTextDemo from './components/Animations/ScrambledText';
-
 
 const ANIMATIONS = [
   {
@@ -96,62 +94,7 @@ export default function App() {
     });
   }, [filters]);
 
-//   return (
-//     <div className={styles.layout}>
-
-//       <FilterSidebar
-//         animations={ANIMATIONS}
-//         filters={filters}
-//         onChange={setFilters}
-//       />
-
-//       <main style={{ flex: 1 }}>
-//         <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 16 }}>
-//           {visible.length} of {ANIMATIONS.length} animations
-//         </p>
-//           <div className={styles.grid}>
-//           {visible.map(a => (
-//             <AnimationCard
-//               key={a.id}
-//               name={a.name}
-//               category={a.category}
-//               platform={a.platforms}
-//               library={a.library}
-//               description={a.description}
-//             >
-//               {a.component}
-//             </AnimationCard>
-//           ))}
-//         </div>
-//       </main>
-
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-return (
-  <>
-    <LibraryHero
-      animationsCount={ANIMATIONS.length}
-      categoriesCount={
-        new Set(ANIMATIONS.map((a) => a.category)).size
-      }
-      platformsCount={
-        new Set(
-          ANIMATIONS.flatMap((a) => a.platforms)
-        ).size
-      }
-      release="v2.4"
-    />
-
+  return (
     <div className={styles.layout}>
 
       <FilterSidebar
@@ -161,17 +104,10 @@ return (
       />
 
       <main style={{ flex: 1 }}>
-        <p
-          style={{
-            fontSize: 12,
-            color: 'rgba(255,255,255,0.3)',
-            marginBottom: 16
-          }}
-        >
+        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 16 }}>
           {visible.length} of {ANIMATIONS.length} animations
         </p>
-
-        <div className={styles.grid}>
+          <div className={styles.grid}>
           {visible.map(a => (
             <AnimationCard
               key={a.id}
@@ -188,6 +124,5 @@ return (
       </main>
 
     </div>
-  </>
-);
+  );
 }
