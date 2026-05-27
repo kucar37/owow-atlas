@@ -11,6 +11,9 @@ import TwinklingStars from './components/Animations/TwinklingStars';
 import BounceCards from './components/Animations/BounceCards';
 import DecryptedTextDemo from './components/Animations/DecryptedText';
 import ScrambledTextDemo from './components/Animations/ScrambledText';
+import LogoLoopDemo from './components/Animations/LogoLoopDemo';
+import StickerPeel from './components/Animations/StickerPeel';
+import ImageTrailDemo from './components/Animations/ImageTrailDemo';
 
 import styles from './App.module.css';
 
@@ -462,6 +465,33 @@ letters.forEach((letter) => {
       'Respect reduced-motion preferences.',
     ],
   },
+  {
+    id: 'logo-loop',
+    name: 'Image Loop',        
+    category: 'Scroll',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'Infinite scrolling image marquee that pauses on hover.',
+    component: <LogoLoopDemo />,
+  },
+  {
+    id: 'sticker-peel',
+    name: 'Sticker Peel',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'A sticker that peels back on hover and can be dragged around.',
+    component: <StickerPeel />,
+  },
+  {
+    id: 'image-trail',
+    name: 'Image Trail',
+    category: 'Hover',
+    platforms: ['Web'],
+    library: 'GSAP',
+    description: 'Images follow the cursor in a trail as you move over the card.',
+    component: <ImageTrailDemo />,
+  },
 ];
 
 const DEFAULT_FILTERS = {
@@ -472,11 +502,10 @@ const DEFAULT_FILTERS = {
 
 export default function App() {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
-  const [selectedAnimation, setSelectedAnimation] = useState(null);
-
-  const [query, setQuery] = useState('');
-  const [sortBy, setSortBy] = useState('name-asc');
-  const [view, setView] = useState('grid');
+  const [query, setQuery]     = useState('');          
+  const [sortBy, setSortBy]   = useState('name-asc');  
+  const [view, setView]       = useState('grid');  
+  const [selectedAnimation, setSelectedAnimation] = useState(null);    
 
   const visible = useMemo(() => {
     let result = ANIMATIONS.filter((a) => {
