@@ -17,6 +17,7 @@ import ImageTrailDemo from './components/Animations/ImageTrailDemo';
 import SlideReveal from './components/Animations/SlideReveal';
 import PulseLoader from './components/Animations/PulseLoader';
 import StackDemo from './components/Animations/StackDemo';
+import Polaroid from './components/Animations/Polaroid';
 
 
 import styles from './App.module.css';
@@ -534,6 +535,15 @@ letters.forEach((letter) => {
     library: 'CSS',
     description: 'A sticker that peels back on hover and can be dragged around.',
     component: <StickerPeel />,
+  },
+  {
+  id: 'polaroid',
+  name: 'Polaroid',
+  category: 'Entrance',
+  platforms: ['Web'],
+  library: 'CSS',
+  description: 'A polaroid photo slides in, shakes, and develops to reveal a silly image.',
+  component: <Polaroid />,
   },
   {
     id: 'image-trail',
