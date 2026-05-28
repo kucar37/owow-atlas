@@ -4,6 +4,9 @@ import AnimationDetail from './components/AnimationDetail/AnimationDetail';
 import FilterSidebar from './components/FilterSidebar/FilterSidebar';
 import Toolbar from './components/Toolbar/Toolbar';
 import Navbar from './components/Navbar/Navbar';
+import Guidelines from './components/Pages/Guidelines';
+import Changelog from './components/Pages/Changelog';
+import Brand from './components/Pages/Brand';
 import FadeIn from './components/Animations/FadeIn';
 import CherryBlossom from './components/Animations/CherryBlossom';
 import Mushroom from './components/Animations/Mushroom';
@@ -51,6 +54,8 @@ const cherryBlossomCode = `.petal {
   top: -20px;
   opacity: 0;
   animation-name: fall;
+  animation-duration: var(--animation-duration, 1800ms);
+  animation-delay: var(--animation-delay, 0ms);
   animation-timing-function: var(--animation-easing, linear);
   animation-iteration-count: var(--animation-iteration-count, infinite);
 }
@@ -79,7 +84,7 @@ const mushroomCode = `.mushroom {
 }`;
 
 const twinklingStarsCode = `.star {
-  animation: twinkle var(--animation-duration, 1200ms) var(--animation-easing, ease-in-out) infinite;
+  animation: twinkle var(--animation-duration, 1200ms) var(--animation-easing, ease-in-out) var(--animation-iteration-count, infinite);
 }
 
 @keyframes twinkle {
@@ -88,7 +93,7 @@ const twinklingStarsCode = `.star {
 }`;
 
 const bounceCardsCode = `.card {
-  animation: bounce var(--animation-duration, 900ms) var(--animation-easing, cubic-bezier(0.34, 1.56, 0.64, 1)) infinite;
+  animation: bounce var(--animation-duration, 900ms) var(--animation-easing, cubic-bezier(0.34, 1.56, 0.64, 1)) var(--animation-iteration-count, infinite);
 }
 
 @keyframes bounce {
@@ -106,7 +111,8 @@ const decryptedTextCode = `.text {
 }`;
 
 const scrambledTextCode = `.letter {
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform var(--animation-duration, 200ms) var(--animation-easing, ease),
+              opacity var(--animation-duration, 200ms) var(--animation-easing, ease);
 }
 
 .letter:hover {
@@ -115,12 +121,12 @@ const scrambledTextCode = `.letter {
 }`;
 
 const slideRevealCode = `.panel {
-  animation: slideIn var(--animation-duration, 1100ms) var(--animation-easing, cubic-bezier(0.16, 1, 0.3, 1)) infinite;
+  animation: slideIn var(--animation-duration, 1100ms) var(--animation-easing, cubic-bezier(0.16, 1, 0.3, 1)) var(--animation-iteration-count, infinite);
 }
 
 .revealBar {
   transform-origin: left;
-  animation: wipe var(--animation-duration, 1100ms) var(--animation-easing, cubic-bezier(0.16, 1, 0.3, 1)) infinite;
+  animation: wipe var(--animation-duration, 1100ms) var(--animation-easing, cubic-bezier(0.16, 1, 0.3, 1)) var(--animation-iteration-count, infinite);
 }
 
 @keyframes slideIn {
@@ -135,7 +141,7 @@ const slideRevealCode = `.panel {
 }`;
 
 const pulseLoaderCode = `.loader span {
-  animation: pulse var(--animation-duration, 900ms) var(--animation-easing, ease-in-out) infinite;
+  animation: pulse var(--animation-duration, 900ms) var(--animation-easing, ease-in-out) var(--animation-iteration-count, infinite);
 }
 
 .loader span:nth-child(2) {
@@ -150,6 +156,76 @@ const pulseLoaderCode = `.loader span {
   0%, 100% { transform: scale(0.65); opacity: 0.35; }
   50% { transform: scale(1.2); opacity: 1; }
 }`;
+
+const logoLoopCode = `.logoloop {
+  position: relative;
+  overflow: hidden;
+  --logoloop-gap: 32px;
+}
+
+.logoloop__track {
+  display: flex;
+  width: max-content;
+  animation: scroll var(--animation-duration, 20000ms) var(--animation-easing, linear) var(--animation-iteration-count, infinite);
+}
+
+.logoloop:hover .logoloop__track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}`;
+
+const stickerPeelCode = `.front {
+  clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, -10% 110%);
+  transition: clip-path var(--animation-duration, 500ms) var(--animation-easing, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+.sticker:hover .front {
+  clip-path: polygon(-10% 25%, 110% 25%, 110% 110%, -10% 110%);
+}
+
+.sticker:active .front {
+  clip-path: polygon(-10% 45%, 110% 45%, 110% 110%, -10% 110%);
+}`;
+
+const polaroidCode = `.polaroid {
+  transform: translateY(160px) rotate(3deg);
+  animation: slideIn 0.6s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+             shake 0.4s 0.9s ease-in-out forwards;
+}
+
+.photo {
+  opacity: 0;
+  animation: develop 1.5s 1.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(160px) rotate(3deg); }
+  to { transform: translateY(0) rotate(-2deg); }
+}
+
+@keyframes develop {
+  from { opacity: 0; filter: brightness(2) sepia(1); }
+  to { opacity: 1; filter: none; }
+}`;
+
+const imageTrailCode = `// Images follow the cursor using GSAP for smooth interpolation.
+container.addEventListener('mousemove', (event) => {
+  const rect = container.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  gsap.to(nextImage, {
+    x, y,
+    scale: 1,
+    opacity: 1,
+    duration: 0.6,
+    ease: 'power3.out',
+  });
+});`;
 
 const ANIMATIONS = [
   {
@@ -490,7 +566,7 @@ text.addEventListener('mouseenter', () => {
     lastUpdated: '12 May 2026 by Tom van Dam',
     githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
     codeSnippets: {
-      react: `import ScrambledTextDemo from './ScrambleText';
+      react: `import ScrambledTextDemo from './ScrambledText';
 
 export default function Example() {
   return <ScrambledTextDemo />;
@@ -520,12 +596,54 @@ letters.forEach((letter) => {
   },
   {
     id: 'logo-loop',
-    name: 'Image Loop',        
+    name: 'Logo Loop',
     category: 'Scroll',
     platforms: ['Web'],
     library: 'CSS',
     description: 'Infinite scrolling image marquee that pauses on hover.',
     component: <LogoLoopDemo />,
+    duration: 20000,
+    delay: 0,
+    easingOption: 'linear',
+    easing: 'linear',
+    loop: true,
+    tags: ['marquee', 'scroll', 'logos'],
+    bundle: '@owow/motion/scroll',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import LogoLoopDemo from './LogoLoopDemo';
+
+export default function Example() {
+  return <LogoLoopDemo />;
+}`,
+      css: logoLoopCode,
+      native: `const track = document.querySelector('.logoloop__track');
+
+track.animate([
+  { transform: 'translateX(0)' },
+  { transform: 'translateX(-50%)' },
+], {
+  duration: 20000,
+  easing: 'linear',
+  iterations: Infinity,
+});`,
+    },
+    usage: {
+      count: 12,
+      projects: [
+        { name: 'Client Logo Wall', status: 'prod' },
+        { name: 'Atlas Library', status: 'prod' },
+        { name: 'Partners Section', status: 'draft' },
+      ],
+    },
+    accessibility: [
+      'Pause the marquee on hover and on focus.',
+      'Provide descriptive alt text for each logo.',
+      'Disable the loop for reduced-motion users.',
+    ],
   },
   {
     id: 'sticker-peel',
@@ -535,15 +653,94 @@ letters.forEach((letter) => {
     library: 'CSS',
     description: 'A sticker that peels back on hover and can be dragged around.',
     component: <StickerPeel />,
+    duration: 500,
+    delay: 0,
+    easingOption: 'spring',
+    easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    loop: false,
+    tags: ['sticker', 'peel', 'drag'],
+    bundle: '@owow/motion/hover',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import StickerPeel from './StickerPeel';
+
+export default function Example() {
+  return <StickerPeel />;
+}`,
+      css: stickerPeelCode,
+      native: `const sticker = document.querySelector('.sticker');
+
+sticker.addEventListener('mouseenter', () => {
+  sticker.classList.add('is-peeling');
+});`,
+    },
+    usage: {
+      count: 5,
+      projects: [
+        { name: 'Playful Landing', status: 'draft' },
+        { name: 'Sticker Kit', status: 'test' },
+        { name: 'Brand Microsite', status: 'prod' },
+      ],
+    },
+    accessibility: [
+      'Provide alt text describing the sticker image.',
+      'Keep the drag interaction optional, not required.',
+      'Respect reduced-motion settings for the peel effect.',
+    ],
   },
   {
-  id: 'polaroid',
-  name: 'Polaroid',
-  category: 'Entrance',
-  platforms: ['Web'],
-  library: 'CSS',
-  description: 'A polaroid photo slides in, shakes, and develops to reveal a silly image.',
-  component: <Polaroid />,
+    id: 'polaroid',
+    name: 'Polaroid',
+    category: 'Entrance',
+    platforms: ['Web'],
+    library: 'CSS',
+    description: 'A polaroid photo slides in, shakes, and develops to reveal a silly image.',
+    component: <Polaroid />,
+    duration: 1500,
+    delay: 300,
+    easingOption: 'spring',
+    easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    loop: false,
+    tags: ['photo', 'develop', 'entrance'],
+    bundle: '@owow/motion/entrance',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import Polaroid from './Polaroid';
+
+export default function Example() {
+  return <Polaroid />;
+}`,
+      css: polaroidCode,
+      native: `const photo = document.querySelector('.photo');
+
+photo.animate([
+  { opacity: 0, filter: 'brightness(2) sepia(1)' },
+  { opacity: 1, filter: 'none' },
+], {
+  duration: 1500,
+  delay: 1400,
+  fill: 'forwards',
+});`,
+    },
+    usage: {
+      count: 3,
+      projects: [
+        { name: 'Memory Gallery', status: 'draft' },
+        { name: 'About Page', status: 'test' },
+        { name: 'Event Recap', status: 'prod' },
+      ],
+    },
+    accessibility: [
+      'Provide alt text for the revealed photo.',
+      'Avoid the shake step for reduced-motion users.',
+      'Keep the develop animation calm and not too fast.',
+    ],
   },
   {
     id: 'image-trail',
@@ -553,6 +750,47 @@ letters.forEach((letter) => {
     library: 'GSAP',
     description: 'Images follow the cursor in a trail as you move over the card.',
     component: <ImageTrailDemo />,
+    duration: 600,
+    delay: 0,
+    easingOption: 'expo-out',
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    loop: false,
+    tags: ['cursor', 'trail', 'gsap'],
+    bundle: '@owow/motion/hover',
+    owner: 'Motion guild',
+    version: '2.4.1',
+    lastUpdated: '12 May 2026 by Tom van Dam',
+    githubUrl: 'https://git.fhict.nl/I556901/owow-atlas',
+    codeSnippets: {
+      react: `import ImageTrailDemo from './ImageTrailDemo';
+
+export default function Example() {
+  return <ImageTrailDemo />;
+}`,
+      css: `/* The trail is driven by GSAP; CSS only sets the base image style. */
+.content__img {
+  position: absolute;
+  width: 120px;
+  aspect-ratio: 1.1;
+  opacity: 0;
+  border-radius: 8px;
+  will-change: transform, opacity;
+}`,
+      native: imageTrailCode,
+    },
+    usage: {
+      count: 6,
+      projects: [
+        { name: 'Creative Showcase', status: 'prod' },
+        { name: 'Portfolio Hover', status: 'draft' },
+        { name: 'Gallery Header', status: 'test' },
+      ],
+    },
+    accessibility: [
+      'Hide the decorative trail from screen readers.',
+      'Provide a static fallback for touch and keyboard users.',
+      'Disable the trail for reduced-motion users.',
+    ],
   },
   {
     id: 'slide-reveal',
@@ -714,22 +952,36 @@ const DEFAULT_FILTERS = {
   libraries: new Set(),
 };
 
+// Maps a navbar link label to an internal page key.
+const LINK_TO_PAGE = {
+  Library: 'library',
+  Guidelines: 'guidelines',
+  Changelog: 'changelog',
+  Brand: 'brand',
+};
+
 export default function App() {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [query, setQuery]     = useState('');          
   const [sortBy, setSortBy]   = useState('name-asc');  
   const [view, setView]       = useState('grid');  
   const [selectedAnimation, setSelectedAnimation] = useState(null);   
-  
+  const [page, setPage]       = useState('library');
+
+  // Navigate to a top-level page from the navbar links.
+  function navigate(link) {
+    setSelectedAnimation(null);
+    setPage(LINK_TO_PAGE[link] ?? 'library');
+  }
+
+  function goHome() {
+    setSelectedAnimation(null);
+    setPage('library');
+  }
+
   useEffect(() => {
-    if (selectedAnimation) {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'auto',
-      });
-    }
-  }, [selectedAnimation]);
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [selectedAnimation, page]);
 
   const visible = useMemo(() => {
     let result = ANIMATIONS.filter((a) => {
@@ -746,7 +998,8 @@ export default function App() {
         a.name.toLowerCase().includes(q) ||
         a.category.toLowerCase().includes(q) ||
         a.library.toLowerCase().includes(q) ||
-        a.description.toLowerCase().includes(q)
+        a.description.toLowerCase().includes(q) ||
+        (a.tags ?? []).some((tag) => tag.toLowerCase().includes(q))
       );
     }
 
@@ -770,17 +1023,27 @@ export default function App() {
         )}
         onBack={() => setSelectedAnimation(null)}
         onSelect={setSelectedAnimation}
+        onNavigate={navigate}
+        onHome={goHome}
       />
     );
   }
 
+  if (page === 'guidelines') {
+    return <Guidelines onNavigate={navigate} onHome={goHome} />;
+  }
+
+  if (page === 'changelog') {
+    return <Changelog onNavigate={navigate} onHome={goHome} />;
+  }
+
+  if (page === 'brand') {
+    return <Brand onNavigate={navigate} onHome={goHome} />;
+  }
+
   return (
     <>
-      <Navbar
-        category="all"
-        current="animations"
-        onHome={() => setSelectedAnimation(null)}
-      />
+      <Navbar active="Library" onNavigate={navigate} onHome={goHome} />
   
       <div className={styles.page}>
 <section className={styles.hero} aria-labelledby="hero-title">
@@ -819,7 +1082,7 @@ export default function App() {
           <span className={styles.featuredLabel}>FEATURED</span>
           <div className={styles.featuredCard}>
             <AnimationCard
-                name="Image Loop"
+                name="Logo Loop"
                 category="Scroll"
                 platform="Web"
                 library="CSS"

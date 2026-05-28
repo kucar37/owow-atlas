@@ -45,6 +45,21 @@ function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }
   );
 }
 
+// Converts a CSS easing string into a value Framer Motion understands.
+function toFramerEase(easing) {
+  if (!easing) return 'easeOut';
+  if (easing === 'linear') return 'linear';
+  if (easing === 'ease-out') return 'easeOut';
+  const match = easing.match(/cubic-bezier\(([^)]+)\)/);
+  if (match) {
+    const points = match[1].split(',').map((n) => parseFloat(n.trim()));
+    if (points.length === 4 && points.every((n) => !Number.isNaN(n))) {
+      return points;
+    }
+  }
+  return 'easeOut';
+}
+
 export default function Stack({
   randomRotation = false,
   sensitivity = 200,
@@ -55,7 +70,11 @@ export default function Stack({
   autoplayDelay = 3000,
   pauseOnHover = false,
   mobileClickOnly = false,
-  mobileBreakpoint = 768
+  mobileBreakpoint = 768,
+  // Live parameters coming from the Atlas detail panel (optional).
+  duration,
+  easing,
+  loop
 }) {
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -73,14 +92,37 @@ export default function Stack({
   const shouldDisableDrag = mobileClickOnly && isMobile;
   const shouldEnableClick = sendToBackOnClick || shouldDisableDrag;
 
+  // When the detail panel provides a duration, animate with a tween so the
+  // Duration/Easing controls visibly affect the card movement. Otherwise
+  // fall back to the default spring physics.
+  const cardTransition = duration
+    ? { type: 'tween', duration: duration / 1000, ease: toFramerEase(easing) }
+    : {
+        type: 'spring',
+        stiffness: animationConfig.stiffness,
+        damping: animationConfig.damping,
+      };
+
+  // The Loop control toggles the auto-cycling of the deck.
+  const isAutoplay = loop ?? autoplay;
+
   const [stack, setStack] = useState(() => {
+    // Compute the random rotation once per card so it stays stable
+    // across re-renders (calling Math.random() during render is impure).
+    const makeRotate = () => (randomRotation ? Math.random() * 10 - 5 : 0);
+
     if (cards.length) {
-      return cards.map((content, index) => ({ id: index + 1, content }));
+      return cards.map((content, index) => ({
+        id: index + 1,
+        content,
+        rotate: makeRotate(),
+      }));
     } else {
-      // Nu gebruiken we hier ook de geïmporteerde modules in plaats van strings!
+      // Fallback demo cards using the imported image modules.
       return [
         {
           id: 1,
+          rotate: makeRotate(),
           content: (
             <img
               src={stack1}
@@ -91,6 +133,7 @@ export default function Stack({
         },
         {
           id: 2,
+          rotate: makeRotate(),
           content: (
             <img
               src={stack2}
@@ -101,6 +144,7 @@ export default function Stack({
         },
         {
           id: 3,
+          rotate: makeRotate(),
           content: (
             <img
               src={stack3}
@@ -111,6 +155,7 @@ export default function Stack({
         },
         {
           id: 4,
+          rotate: makeRotate(),
           content: (
             <img
               src={stack4}
@@ -123,11 +168,10 @@ export default function Stack({
     }
   });
 
-  useEffect(() => {
-    if (cards.length) {
-      setStack(cards.map((content, index) => ({ id: index + 1, content })));
-    }
-  }, [cards]);
+  // Note: the stack is initialized from `cards` once (see useState above).
+  // We intentionally do not re-sync on every `cards` reference change,
+  // because the parent passes a freshly built array each render, which
+  // would reset the card order and trigger cascading renders.
 
   const sendToBack = id => {
     setStack(prev => {
@@ -140,7 +184,7 @@ export default function Stack({
   };
 
   useEffect(() => {
-    if (autoplay && stack.length > 1 && !isPaused) {
+    if (isAutoplay && stack.length > 1 && !isPaused) {
       const interval = setInterval(() => {
         const topCardId = stack[stack.length - 1].id;
         sendToBack(topCardId);
@@ -148,7 +192,7 @@ export default function Stack({
 
       return () => clearInterval(interval);
     }
-  }, [autoplay, autoplayDelay, stack, isPaused]);
+  }, [isAutoplay, autoplayDelay, stack, isPaused]);
 
   return (
     <div
@@ -157,7 +201,7 @@ export default function Stack({
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
       {stack.map((card, index) => {
-        const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
+        const randomRotate = card.rotate ?? 0;
         return (
           <CardRotate
             key={card.id}
@@ -174,11 +218,7 @@ export default function Stack({
                 transformOrigin: '90% 90%'
               }}
               initial={false}
-              transition={{
-                type: 'spring',
-                stiffness: animationConfig.stiffness,
-                damping: animationConfig.damping
-              }}
+              transition={cardTransition}
             >
               {card.content}
             </motion.div>

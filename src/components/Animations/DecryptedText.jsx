@@ -76,20 +76,21 @@ function DecryptedText({
     setIsDecrypted(true);
   }, [text]);
 
-  useEffect(() => {
-    setDisplayText(text);
-    setIsDecrypted(true);
-  }, [text]);
-
+  // displayText is already initialized from `text` via useState above,
+  // so no synchronous setState effect is needed here.
   useEffect(() => () => clearInterval(intervalRef.current), []);
+
+  const hoverProps =
+    animateOn === 'hover'
+      ? { onMouseEnter: triggerDecrypt, onMouseLeave: resetText }
+      : {};
 
   return (
     <motion.span
       ref={containerRef}
       className={parentClassName}
       style={{ display: 'inline-block', whiteSpace: 'pre-wrap', cursor: 'pointer' }}
-      onMouseEnter={triggerDecrypt}
-      onMouseLeave={resetText}
+      {...hoverProps}
       {...props}
     >
       {displayText.split('').map((char, i) => (

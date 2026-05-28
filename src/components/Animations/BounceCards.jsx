@@ -18,7 +18,7 @@ const TRANSFORMS = [
   'rotate(-5deg) translate(60px)',
 ];
 
-export default function BounceCards() {
+export default function BounceCards({ duration, delay, loop }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -30,15 +30,16 @@ export default function BounceCards() {
           scale: 1,
           stagger: 0.08,
           ease: 'elastic.out(1, 0.5)',
-          delay: 0.3,
-          repeat: -1,
+          duration: (duration ?? 900) / 1000,
+          delay: (delay ?? 300) / 1000,
+          repeat: loop === false ? 0 : -1,
           repeatDelay: 2,
           yoyo: true,
         }
       );
     }, containerRef);
     return () => ctx.revert();
-  }, []);
+  }, [duration, delay, loop]);
 
   return (
     <div className={styles.container} ref={containerRef}>

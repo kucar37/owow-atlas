@@ -9,7 +9,7 @@
     color: #D4FF3A;
     opacity: 0;
     transform: scale(0);
-    animation: twinkle 3s ease-in-out infinite;
+    animation: twinkle var(--animation-duration, 3000ms) var(--animation-easing, ease-in-out) var(--animation-iteration-count, infinite);
   }
   
   .s1 { top: 15%; left: 20%; font-size: 14px; animation-delay: 0s; }

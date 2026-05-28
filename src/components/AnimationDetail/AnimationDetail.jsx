@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { cloneElement, isValidElement, useMemo, useState } from 'react';
 import AnimationCard from '../AnimationCard/AnimationCard';
 import Navbar from '../Navbar/Navbar';
 import styles from './AnimationDetail.module.css';
@@ -10,11 +10,73 @@ const EASING_OPTIONS = {
   spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
 };
 
+// Replaces a CSS custom property reference like `var(--animation-easing, X)`
+// with a literal value, correctly handling nested parentheses inside the
+// fallback (e.g. cubic-bezier(...)). A plain regex can't balance parens.
+function replaceCssVar(code, varName, value) {
+  const token = `var(--${varName}`;
+  let result = '';
+  let cursor = 0;
+
+  while (cursor < code.length) {
+    const start = code.indexOf(token, cursor);
+    if (start === -1) {
+      result += code.slice(cursor);
+      break;
+    }
+    result += code.slice(cursor, start);
+
+    // Walk forward from the opening `var(` to its matching close paren.
+    let depth = 0;
+    let end = start;
+    for (; end < code.length; end++) {
+      if (code[end] === '(') depth++;
+      else if (code[end] === ')') {
+        depth--;
+        if (depth === 0) break;
+      }
+    }
+
+    result += value;
+    cursor = end + 1;
+  }
+
+  return result;
+}
+
+// Rewrites a CSS snippet so the copied/displayed code reflects the live
+// parameters instead of the static defaults baked into the var() fallbacks.
+function applyParamsToCss(code, { duration, delay, easing, loop }) {
+  let out = replaceCssVar(code, 'animation-duration', `${duration}ms`);
+  out = replaceCssVar(out, 'animation-delay', `${delay}ms`);
+  out = replaceCssVar(out, 'animation-easing', easing);
+  out = replaceCssVar(out, 'animation-iteration-count', loop ? 'infinite' : '1');
+  return out;
+}
+
+// Rewrites a JS (Web Animations API / library) snippet to reflect the live
+// parameters. Only replaces standalone numeric literals so staggered delays
+// like `index * 120` are left untouched.
+function applyParamsToNative(code, { duration, easing, loop }) {
+  return code
+    .replace(/duration:\s*\d+/g, `duration: ${duration}`)
+    .replace(/iterations:\s*Infinity/g, loop ? 'iterations: Infinity' : 'iterations: 1')
+    .replace(/easing:\s*'[^']*'/g, `easing: '${easing}'`);
+}
+
+function applyParamsToCode(code, tab, params) {
+  if (tab === 'css') return applyParamsToCss(code, params);
+  if (tab === 'native') return applyParamsToNative(code, params);
+  return code;
+}
+
 export default function AnimationDetail({
   animation,
   relatedAnimations = [],
   onBack,
   onSelect,
+  onNavigate,
+  onHome,
 }) {
   const [duration, setDuration] = useState(animation.duration ?? 700);
   const [delay, setDelay] = useState(animation.delay ?? 0);
@@ -30,11 +92,30 @@ export default function AnimationDetail({
     : [animation.platforms];
 
   const codeSnippets = animation.codeSnippets ?? {};
-  const code =
+  const rawCode =
     codeSnippets[activeTab] ??
     codeSnippets.react ??
     codeSnippets.css ??
     '';
+
+  const code = applyParamsToCode(rawCode, activeTab, {
+    duration,
+    delay,
+    easing: easingValue,
+    loop,
+  });
+
+  // Pass the live parameters into the preview component so JS-driven
+  // animations (Framer Motion, GSAP) react to the controls too. CSS-based
+  // animations also read them via the CSS variables on the canvas below.
+  const livePreview = isValidElement(animation.component)
+    ? cloneElement(animation.component, {
+        duration,
+        delay,
+        easing: easingValue,
+        loop,
+      })
+    : animation.component;
 
   const previewStyle = useMemo(
     () => ({
@@ -64,11 +145,9 @@ export default function AnimationDetail({
   return (
     <>
       <Navbar
-        category={animation.category}
-        current="animation"
-        showBack
-        onBack={onBack}
-        onHome={onBack}
+        active="Library"
+        onHome={onHome ?? onBack}
+        onNavigate={onNavigate}
       />
 
       <main className={styles.page}>
@@ -114,7 +193,7 @@ export default function AnimationDetail({
 
               <div className={styles.previewCanvas} style={previewStyle}>
                 <div key={replayKey} className={styles.previewScale}>
-                  {animation.component}
+                  {livePreview}
                 </div>
               </div>
 

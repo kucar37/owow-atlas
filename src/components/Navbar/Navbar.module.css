@@ -12,6 +12,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  text-align: left;
 }
 
 .brandText {
@@ -21,7 +27,7 @@
 }
 
 .brandName {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -30,7 +36,7 @@
 
 .brandSub {
   font-family: monospace;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.03em;
   color: #6A6A6A;
 }
@@ -52,7 +58,7 @@
   border: none;
   border-radius: 999px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 16px;
   color: #888;
   cursor: pointer;
   transition: color 0.15s ease, background 0.15s ease;

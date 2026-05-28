@@ -1,25 +1,39 @@
-import { useState } from 'react';
 import styles from './Navbar.module.css';
 
 // Navigation links shown in the center of the bar
 const NAV_LINKS = ['Library', 'Guidelines', 'Changelog', 'Brand'];
 
-export default function Navbar() {
-  // Tracks which link is currently active.
-  // When routing is added later, this can be replaced by the router state.
-  const [active, setActive] = useState('Library');
+export default function Navbar({
+  active = 'Library',
+  onNavigate,
+  onHome,
+}) {
+  function handleLinkClick(link) {
+    if (link === 'Library' && onHome) {
+      onHome();
+      return;
+    }
+    if (onNavigate) {
+      onNavigate(link);
+    }
+  }
 
   return (
     <nav className={styles.navbar}>
 
-      {/* ---- Brand / logo ---- */}
-      <div className={styles.brand}>
+      {/* ---- Brand / logo (clicking it goes home) ---- */}
+      <button
+        type="button"
+        className={styles.brand}
+        onClick={onHome}
+        aria-label="Go to library home"
+      >
         <LogoMark />
         <div className={styles.brandText}>
           <span className={styles.brandName}>ATLAS</span>
           <span className={styles.brandSub}>Motion library · v2.4</span>
         </div>
-      </div>
+      </button>
 
       {/* ---- Center navigation links ---- */}
       <div className={styles.links}>
@@ -27,7 +41,7 @@ export default function Navbar() {
           <button
             key={link}
             className={`${styles.link} ${active === link ? styles.linkActive : ''}`}
-            onClick={() => setActive(link)}
+            onClick={() => handleLinkClick(link)}
             aria-current={active === link ? 'page' : undefined}
           >
             {link}

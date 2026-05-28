@@ -3,7 +3,7 @@ import styles from './FilterSidebar.module.css';
 
 const CATEGORIES = ['Entrance','Exit','Hover','Scroll','Transition','Loading','Attention'];
 const PLATFORMS  = ['Web', 'Mobile'];
-const LIBRARIES = ['GSAP', 'CSS'];
+const LIBRARIES = ['GSAP', 'CSS', 'Framer Motion'];
 
 export default function FilterSidebar({ animations, filters, onChange }) {
   const [open, setOpen] = useState(false);
@@ -33,12 +33,12 @@ export default function FilterSidebar({ animations, filters, onChange }) {
   return (
     <aside className={styles.sidebar}>
 
-      {/* Hamburger — alleen zichtbaar op mobile */}
+      {/* Hamburger — only visible on mobile */}
       <button className={styles.menuBtn} onClick={() => setOpen(!open)}>
         {open ? '✕ Filters' : '☰ Filters'}
       </button>
 
-      {/* Content — altijd zichtbaar op desktop, toggle op mobile */}
+      {/* Content — always visible on desktop, toggled on mobile */}
       <div className={`${styles.menuContent} ${open ? styles.menuOpen : ''}`}>
 
         {/* Platform */}

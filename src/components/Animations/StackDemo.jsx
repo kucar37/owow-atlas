@@ -7,7 +7,7 @@ import stack4 from '../../assets/fonts/slack4.gif';
 
 const images = [stack1, stack2, stack3, stack4];
 
-export default function StackDemo() {
+export default function StackDemo({ duration, easing, loop }) {
   return (
     <div style={{ width: '130px', height: '130px', margin: '0 auto' }}>
       <Stack
@@ -17,6 +17,9 @@ export default function StackDemo() {
         autoplay={true}
         autoplayDelay={3500}
         pauseOnHover={true}
+        duration={duration}
+        easing={easing}
+        loop={loop}
         cards={images.map((src, i) => (
           <img 
             key={i} 

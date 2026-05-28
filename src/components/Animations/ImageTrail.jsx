@@ -7,7 +7,7 @@ function lerp(a, b, n) {
 }
 
 function getLocalPointerPos(e, rect) {
-  let clientX = 0, clientY = 0;
+  let clientX, clientY;
   if (e.touches && e.touches.length > 0) {
     clientX = e.touches[0].clientX;
     clientY = e.touches[0].clientY;

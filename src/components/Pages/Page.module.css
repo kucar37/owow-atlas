@@ -1,0 +1,378 @@
+/* Shared layout + design tokens for the Atlas content pages
+   (Guidelines, Changelog, Brand). Matches the existing dark/lime theme. */
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+/* ---- Page header ---- */
+.header {
+  border-bottom: 1px solid #1b1b1b;
+  padding-bottom: 32px;
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d4ff3a;
+  margin-bottom: 18px;
+  display: block;
+  opacity: 0;
+  animation: rise 0.6s ease-out forwards;
+}
+
+.title {
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  color: #f5f5f4;
+  opacity: 0;
+  animation: rise 0.6s 0.06s ease-out forwards;
+}
+
+.lead {
+  margin-top: 20px;
+  max-width: 640px;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #b5b5b0;
+  opacity: 0;
+  animation: rise 0.6s 0.12s ease-out forwards;
+}
+
+/* ---- Sections ---- */
+.section {
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: rise 0.6s 0.18s ease-out forwards;
+}
+
+.sectionLabel {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5d5d5d;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #f5f5f4;
+  margin-bottom: 14px;
+}
+
+.paragraph {
+  max-width: 680px;
+  color: #b5b5b0;
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.paragraph strong {
+  color: #f5f5f4;
+  font-weight: 500;
+}
+
+/* ---- Card grid ---- */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #121212;
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  border-color: #2e2e2e;
+  transform: translateY(-2px);
+}
+
+.cardTag {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d4ff3a;
+  margin-bottom: 14px;
+}
+
+.cardTitle {
+  font-size: 21px;
+  font-weight: 500;
+  color: #f5f5f4;
+  margin-bottom: 10px;
+}
+
+.cardText {
+  color: #9a9a96;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ---- Do / Don't list ---- */
+.ruleList {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.ruleItem {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  color: #c2c2bd;
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 14px 18px;
+  background: #101010;
+  border: 1px solid #1d1d1d;
+  border-radius: 12px;
+}
+
+.markDo {
+  color: #d4ff3a;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.markDont {
+  color: #ff6b5e;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ---- Changelog ---- */
+.releaseList {
+  display: grid;
+  gap: 0;
+}
+
+.release {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  padding: 28px 0;
+  border-top: 1px solid #1b1b1b;
+}
+
+.release:last-child {
+  border-bottom: 1px solid #1b1b1b;
+}
+
+.releaseMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.releaseVersion {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 16px;
+  color: #0a0a0a;
+  background: #d4ff3a;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.releaseVersionMuted {
+  color: #f5f5f4;
+  background: #1f1f1f;
+}
+
+.releaseDate {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 15px;
+  color: #5d5d5d;
+}
+
+.changeList {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.change {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  color: #c2c2bd;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.changeKind {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  min-width: 64px;
+  text-align: center;
+}
+
+.kindNew {
+  color: #d4ff3a;
+  background: rgba(212, 255, 58, 0.12);
+}
+
+.kindFix {
+  color: #7db5ff;
+  background: rgba(125, 181, 255, 0.12);
+}
+
+.kindImproved {
+  color: #ffcf6b;
+  background: rgba(255, 207, 107, 0.12);
+}
+
+/* ---- Brand: color swatches ---- */
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.swatch {
+  border: 1px solid #222;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #121212;
+}
+
+.swatchColor {
+  height: 96px;
+  width: 100%;
+}
+
+.swatchInfo {
+  padding: 14px 16px;
+}
+
+.swatchName {
+  font-size: 16px;
+  color: #f5f5f4;
+  margin-bottom: 4px;
+}
+
+.swatchHex {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 15px;
+  color: #8a8a86;
+  text-transform: uppercase;
+}
+
+/* ---- Brand: type specimens ---- */
+.typeSpecimen {
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 28px;
+  background: #121212;
+  margin-bottom: 14px;
+}
+
+.typeName {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5d5d5d;
+  margin-bottom: 18px;
+}
+
+.typeDisplay {
+  font-size: 48px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: #f5f5f4;
+}
+
+.typeMono {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 24px;
+  color: #f5f5f4;
+  letter-spacing: 0.02em;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.logoTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  border: 1px solid #222;
+}
+
+.logoOnDark {
+  background: #0a0a0a;
+}
+
+.logoOnLime {
+  background: #d4ff3a;
+}
+
+.logoOnLight {
+  background: #f5f5f4;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .title,
+  .lead,
+  .section {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 40px 16px 72px;
+  }
+
+  .release {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
