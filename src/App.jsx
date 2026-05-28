@@ -819,7 +819,7 @@ export default function App() {
           <span className={styles.featuredLabel}>FEATURED</span>
           <div className={styles.featuredCard}>
             <AnimationCard
-                name="Logo_Loop"
+                name="Image Loop"
                 category="Scroll"
                 platform="Web"
                 library="CSS"
